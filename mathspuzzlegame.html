@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GCSE Maths Fun Puzzle</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Inter,sans-serif;scroll-behavior:smooth;}
+body{background:#f4f4f4;color:#111;overflow-x:hidden;}
+a{text-decoration:none;color:inherit;}
+header{position:fixed;top:0;width:100%;display:flex;justify-content:space-between;align-items:center;padding:15px 30px;background:rgba(255,255,255,0.95);backdrop-filter:blur(14px);border-bottom:1px solid rgba(0,0,0,.1);z-index:3000;}
+header h1{color:#ff3860;font-size:22px;}
+nav{display:flex;align-items:center;gap:18px;}
+.nav-item{position:relative;cursor:pointer;}
+.dropdown{position:absolute;top:36px;left:0;display:none;flex-direction:column;min-width:180px;border-radius:10px;border:1px solid #ccc;box-shadow:0 12px 30px rgba(0,0,0,.1);background:#e0e0e0;color:#111;z-index:4000;transition:background .3s,color .3s;}
+.dropdown a{padding:10px 14px;transition:background .3s,color .3s;}
+.dropdown a:hover{background:rgba(255,56,96,0.2);color:#ff3860;}
+.container{max-width:1100px;margin:120px auto 60px auto;padding:40px;}
+.section{margin-bottom:60px;}
+.section h2{color:#ff3860;margin-bottom:20px;}
+.card-container{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px;}
+.card{padding:25px;border-radius:12px;border:1px solid #ccc;transition:transform .3s,box-shadow .3s;cursor:pointer;text-align:center;display:flex;align-items:center;justify-content:center;background:#e0e0e0;color:#111;}
+.card:hover{transform:translateY(-8px) scale(1.03);border-color:#ff3860;box-shadow:0 20px 40px rgba(0,0,0,.1);}
+#game-container{margin-top:40px;text-align:center;}
+.questions-container, .answers-container{margin:20px 0;}
+.questions-container h3, .answers-container h3{color:#d63384;margin-bottom:10px;}
+.questions, .answers{display:flex;flex-wrap:wrap;justify-content:center;}
+.question, .answer{border:2px dashed #d63384;background:#ffe0f0;padding:15px;margin:10px;border-radius:10px;min-width:120px;cursor:grab;transition:transform 0.3s,background 0.3s;}
+.question.correct{background-color:#b8f2d8;border-color:#38b000;transform:scale(1.2);}
+.answer:hover{transform:scale(1.1);}
+#progressContainer{width:80%;background:#f3f3f3;margin:0 auto;border-radius:10px;overflow:hidden;height:25px;}
+#progressBar{height:100%;width:0;background:#d63384;transition:width 0.4s;}
+#confetti{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:1000;}
+#congrats{font-size:2em;color:#38b000;display:none;animation:pop 1s forwards;margin-top:20px;}
+@keyframes pop{0%{transform:scale(0);opacity:0;}50%{transform:scale(1.5);opacity:1;}100%{transform:scale(1);}}
+.popup{position:fixed;top:20%;left:50%;transform:translateX(-50%);background:#ffd0d0;padding:20px 30px;border-radius:12px;border:2px solid #d63384;box-shadow:0 10px 30px rgba(0,0,0,.2);display:none;z-index:5000;animation:popupAnim 0.5s ease forwards;}
+@keyframes popupAnim{0%{opacity:0;transform:translateX(-50%) translateY(-20px);}100%{opacity:1;transform:translateX(-50%) translateY(0);}}
+</style>
+</head>
+<body>
+
+<header>
+<h1>Anarchy Learning</h1>
+<div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+<nav id="navMenu">
+<div class="nav-item">
+<a href="#">Exams</a>
+<div class="dropdown">
+<a href="#">SATs Revision</a>
+<a href="#">GCSE Revision</a>
+<a href="#">A-Level Revision</a>
+</div>
+</div>
+<div class="nav-item">
+<a href="#">Subjects</a>
+<div class="dropdown">
+<a href="#">Mathematics</a>
+<a href="#">Further Mathematics</a>
+</div>
+</div>
+</nav>
+</header>
+
+<div class="container">
+  <div class="section" id="games-quizzes">
+    <h2>Games & Quizzes</h2>
+    <div class="card-container">
+      <a href="#game-container" class="card">Maths Puzzle Game</a>
+    </div>
+  </div>
+
+  <div id="game-container">
+    <h2 id="topicTitle">Topic: Addition</h2>
+    <div id="progressContainer"><div id="progressBar"></div></div>
+    
+    <div class="questions-container">
+      <h3>Questions</h3>
+      <div class="questions" id="questions"></div>
+    </div>
+    
+    <div class="answers-container">
+      <h3>Answers</h3>
+      <div class="answers" id="answers"></div>
+    </div>
+    
+    <div id="congrats">🎊 Yay! You got it! 🎊</div>
+    <canvas id="confetti"></canvas>
+    
+    <div id="popup" class="popup"></div>
+  </div>
+</div>
+
+<script>
+// Navbar
+const burger=document.getElementById("hamburger");
+const nav=document.getElementById("navMenu");
+burger.onclick=()=>nav.classList.toggle("active");
+document.querySelectorAll(".nav-item").forEach(item=>{
+  item.querySelector("a").onclick=(e)=>{
+    e.preventDefault();
+    const drop=item.querySelector(".dropdown");
+    document.querySelectorAll(".dropdown").forEach(d=>{
+      if(d!==drop)d.style.display="none";
+    });
+    drop.style.display=(drop.style.display==="flex")?"none":"flex";
+  }
+});
+
+// Game
+const topics = {
+  "Addition":[
+    {q:"4 + 4",a:"8",ex:"4 + 4 is 8 because adding 4 to 4 equals 8."},
+    {q:"7 + 8",a:"15",ex:"7 + 8 is 15, just sum them together."},
+    {q:"12 + 5",a:"17",ex:"12 + 5 is 17."}
+  ],
+  "Subtraction":[
+    {q:"10 - 3",a:"7",ex:"10 - 3 = 7, subtract 3 from 10."},
+    {q:"15 - 8",a:"7",ex:"15 - 8 = 7."},
+    {q:"20 - 12",a:"8",ex:"20 - 12 = 8."}
+  ],
+  "Multiplication":[
+    {q:"3 × 4",a:"12",ex:"3 times 4 is 12."},
+    {q:"5 × 6",a:"30",ex:"5 × 6 = 30."},
+    {q:"7 × 3",a:"21",ex:"7 × 3 = 21."}
+  ],
+  "Division":[
+    {q:"12 ÷ 3",a:"4",ex:"12 ÷ 3 = 4."},
+    {q:"30 ÷ 5",a:"6",ex:"30 ÷ 5 = 6."},
+    {q:"21 ÷ 7",a:"3",ex:"21 ÷ 7 = 3."}
+  ]
+};
+
+let topicKeys = Object.keys(topics);
+let currentTopicIndex = 0;
+let currentTopic = topicKeys[currentTopicIndex];
+let questions=[...topics[currentTopic]];
+let score=0;
+
+const questionsContainer=document.getElementById('questions');
+const answersContainer=document.getElementById('answers');
+const progressBar=document.getElementById('progressBar');
+const congrats=document.getElementById('congrats');
+const topicTitle=document.getElementById('topicTitle');
+const confettiCanvas=document.getElementById('confetti');
+const popup=document.getElementById('popup');
+const ctx=confettiCanvas.getContext('2d');
+confettiCanvas.width=window.innerWidth;
+confettiCanvas.height=window.innerHeight;
+
+function spawnConfetti(){
+  const colors=["#d63384","#38b000","#6f42c1","#ffd60a"];
+  for(let i=0;i<100;i++){
+    ctx.fillStyle=colors[Math.floor(Math.random()*colors.length)];
+    ctx.fillRect(Math.random()*confettiCanvas.width,Math.random()*confettiCanvas.height,10,10);
+  }
+  setTimeout(()=>ctx.clearRect(0,0,confettiCanvas.width,confettiCanvas.height),500);
+}
+
+function showPopup(text){
+  popup.innerText=text;
+  popup.style.display="block";
+  setTimeout(()=>{popup.style.display="none";},2500);
+}
+
+function render(){
+  questionsContainer.innerHTML='';
+  answersContainer.innerHTML='';
+  const shuffledAnswers=questions.map(q=>q.a).sort(()=>Math.random()-0.5);
+  questions.forEach(q=>{
+    const div=document.createElement('div');
+    div.classList.add('question');
+    div.setAttribute('data-answer',q.a);
+    div.setAttribute('data-explanation',q.ex);
+    div.innerText=q.q;
+    div.addEventListener('dragover',e=>e.preventDefault());
+    div.addEventListener('drop',e=>{
+      e.preventDefault();
+      const ans=e.dataTransfer.getData('text');
+      if(ans===div.getAttribute('data-answer')){
+        div.innerText=`${q.q} = ${ans} ✅`;
+        div.classList.add('correct');
+        score++;
+        updateProgress();
+        congrats.style.display='block';
+        spawnConfetti();
+        setTimeout(()=>congrats.style.display='none',1000);
+      } else {
+        showPopup(div.getAttribute('data-explanation'));
+      }
+    });
+    questionsContainer.appendChild(div);
+  });
+  shuffledAnswers.forEach(a=>{
+    const div=document.createElement('div');
+    div.classList.add('answer');
+    div.innerText=a;
+    div.setAttribute('draggable','true');
+    div.addEventListener('dragstart',e=>e.dataTransfer.setData('text',a));
+    answersContainer.appendChild(div);
+  });
+}
+
+function updateProgress(){
+  progressBar.style.width=`${(score/questions.length)*100}%`;
+  if(score===questions.length){
+    alert(`🎉 You completed the ${currentTopic} topic! 🎉`);
+    nextTopic();
+  }
+}
+
+function nextTopic(){
+  currentTopicIndex = (currentTopicIndex + 1) % topicKeys.length;
+  currentTopic = topicKeys[currentTopicIndex];
+  questions=[...topics[currentTopic]];
+  score=0;
+  topicTitle.innerText=`Topic: ${currentTopic}`;
+  progressBar.style.width='0%';
+  render();
+}
+
+render();
+</script>
+</body>
+</html>
