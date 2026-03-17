@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AQA Maths GCSE Revision</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Inter,sans-serif;scroll-behavior:smooth;}
+body{background:#000;color:#eee;overflow-x:hidden;transition:background .3s,color .3s;}
+body.light{background:#f4f4f4;color:#111;}
+a{text-decoration:none;color:inherit;}
+header{position:fixed;top:0;width:100%;display:flex;justify-content:space-between;align-items:center;padding:15px 30px;background:rgba(20,20,20,0.55);backdrop-filter:blur(14px);border-bottom:1px solid rgba(255,255,255,.08);z-index:3000;}
+body.light header{background:rgba(255,255,255,.65);border-bottom:1px solid rgba(0,0,0,.1);}
+header h1{color:#ff3860;font-size:22px;}
+nav{display:flex;align-items:center;gap:18px;}
+.nav-item{position:relative;cursor:pointer;}
+.dropdown{position:absolute;top:36px;left:0;display:none;flex-direction:column;min-width:180px;border-radius:10px;border:1px solid #222;box-shadow:0 12px 30px rgba(0,0,0,.4);z-index:4000;transition:background .3s,color .3s;}
+body.dark .dropdown{background:rgba(20,20,20,0.95);border:1px solid rgba(255,255,255,.08);color:#eee;}
+body.light .dropdown{background:#e0e0e0;border:1px solid #ccc;color:#111;}
+.dropdown a{padding:10px 14px;transition:background .3s,color .3s;}
+.dropdown a:hover{background:rgba(255,56,96,0.2);color:#ff3860;}
+.theme-btn{border:none;padding:6px 12px;border-radius:6px;cursor:pointer;font-weight:600;transition:background .3s,color .3s;}
+body.dark .theme-btn{background:#ff3860;color:white;}
+body.light .theme-btn{background:#ff3860;color:white;}
+.container{max-width:1100px;margin:120px auto 60px auto;padding:40px;}
+.section{margin-bottom:60px;}
+.section h2{color:#ff3860;margin-bottom:20px;}
+.card-container{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px;}
+.card{padding:25px;border-radius:12px;border:1px solid #222;transition:transform .3s,box-shadow .3s;cursor:pointer;text-align:center;display:flex;align-items:center;justify-content:center;}
+body.dark .card{background:rgba(30,30,30,0.85);color:#eee;}
+body.light .card{background:#e0e0e0;color:#111;border:1px solid #ccc;}
+.card:hover{transform:translateY(-8px) scale(1.03);border-color:#ff3860;box-shadow:0 20px 40px rgba(0,0,0,.5);}
+</style>
+</head>
+<body class="dark">
+<header>
+<h1>Anarchy Learning</h1>
+<div class="hamburger" id="hamburger">
+<span></span>
+<span></span>
+<span></span>
+</div>
+<nav id="navMenu">
+<div class="nav-item">
+<a href="#">Exams</a>
+<div class="dropdown">
+<a href="#">SATs Revision</a>
+<a href="#">GCSE Revision</a>
+<a href="#">A-Level Revision</a>
+</div>
+</div>
+<div class="nav-item">
+<a href="#">Subjects</a>
+<div class="dropdown">
+<a href="#">Mathematics</a>
+<a href="#">Further Mathematics</a>
+<a href="#">English Language</a>
+<a href="#">English Literature</a>
+<a href="#">Biology</a>
+<a href="#">Chemistry</a>
+<a href="#">Physics</a>
+<a href="#">Computer Science</a>
+<a href="#">Geography</a>
+<a href="#">History</a>
+<a href="#">Religious Studies</a>
+<a href="#">Business Studies</a>
+<a href="#">Economics</a>
+<a href="#">Psychology</a>
+<a href="#">Sociology</a>
+<a href="#">Politics</a>
+<a href="#">Law</a>
+<a href="#">Philosophy</a>
+<a href="#">Media Studies</a>
+<a href="#">Art & Design</a>
+<a href="#">Photography</a>
+<a href="#">Music</a>
+<a href="#">Drama & Theatre</a>
+<a href="#">Modern Languages</a>
+<a href="#">Classical Languages</a>
+<a href="#">Design & Technology</a>
+<a href="#">Food Preparation & Nutrition</a>
+<a href="#">Physical Education</a>
+<a href="#">Environmental Science</a>
+</div>
+</div>
+<button class="theme-btn" id="themeToggle">Theme</button>
+</nav>
+</header>
+
+<div class="container">
+  <div class="section" id="topics">
+    <h2>Topics</h2>
+    <div class="card-container">
+      <a href="#" class="card">Algebra</a>
+      <a href="#" class="card">Geometry & Measures</a>
+      <a href="#" class="card">Statistics & Probability</a>
+      <a href="#" class="card">Number & Arithmetic</a>
+      <a href="#" class="card">Ratio, Proportion & Rates of Change</a>
+      <a href="#" class="card">Graphs & Functions</a>
+      <a href="#" class="card">Trigonometry</a>
+      <a href="#" class="card">Calculus Basics</a>
+    </div>
+  </div>
+
+  <div class="section" id="past-papers">
+    <h2>Past Papers</h2>
+    <div class="card-container">
+      <a href="#" class="card">2018 Paper 1</a>
+      <a href="#" class="card">2018 Paper 2</a>
+      <a href="#" class="card">2018 Paper 3</a>
+      <a href="#" class="card">2019 Paper 1</a>
+      <a href="#" class="card">2019 Paper 2</a>
+      <a href="#" class="card">2019 Paper 3</a>
+      <a href="#" class="card">2020 Paper 1</a>
+      <a href="#" class="card">2020 Paper 2</a>
+      <a href="#" class="card">2020 Paper 3</a>
+      <a href="#" class="card">2021 Paper 1</a>
+      <a href="#" class="card">2021 Paper 2</a>
+      <a href="#" class="card">2021 Paper 3</a>
+      <a href="#" class="card">2022 Paper 1</a>
+      <a href="#" class="card">2022 Paper 2</a>
+      <a href="#" class="card">2022 Paper 3</a>
+      <a href="#" class="card">2023 Paper 1</a>
+      <a href="#" class="card">2023 Paper 2</a>
+      <a href="#" class="card">2023 Paper 3</a>
+      <a href="#" class="card">2024 Paper 1</a>
+      <a href="#" class="card">2024 Paper 2</a>
+      <a href="#" class="card">2024 Paper 3</a>
+    </div>
+  </div>
+
+  <div class="section" id="games-quizzes">
+    <h2>Games & Quizzes</h2>
+    <div class="card-container">
+      <a href="#" class="card">Maths Puzzle Game</a>
+      <a href="#" class="card">Times Tables Challenge</a>
+      <a href="#" class="card">Algebra Quiz</a>
+      <a href="#" class="card">Geometry Quiz</a>
+      <a href="#" class="card">Probability Challenge</a>
+    </div>
+  </div>
+</div>
+
+<script>
+const burger=document.getElementById("hamburger");
+const nav=document.getElementById("navMenu");
+burger.onclick=()=>nav.classList.toggle("active");
+document.querySelectorAll(".nav-item").forEach(item=>{
+  item.querySelector("a").onclick=(e)=>{
+    e.preventDefault();
+    const drop=item.querySelector(".dropdown");
+    document.querySelectorAll(".dropdown").forEach(d=>{
+      if(d!==drop)d.style.display="none";
+    });
+    drop.style.display=(drop.style.display==="flex")?"none":"flex";
+  }
+});
+const toggle=document.getElementById("themeToggle");
+if(localStorage.getItem("theme")==="light"){document.body.classList.add("light");document.body.classList.remove("dark");}
+toggle.onclick=()=>{
+  document.body.classList.toggle("light");
+  document.body.classList.toggle("dark");
+  if(document.body.classList.contains("light")){
+    localStorage.setItem("theme","light");
+  }else{
+    localStorage.setItem("theme","dark");
+  }
+}
+</script>
+</body>
+</html>
