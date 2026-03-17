@@ -57,31 +57,6 @@ body.light .card{background:#e0e0e0;color:#111;border:1px solid #ccc;}
 <a href="#">Further Mathematics</a>
 <a href="#">English Language</a>
 <a href="#">English Literature</a>
-<a href="#">Biology</a>
-<a href="#">Chemistry</a>
-<a href="#">Physics</a>
-<a href="#">Computer Science</a>
-<a href="#">Geography</a>
-<a href="#">History</a>
-<a href="#">Religious Studies</a>
-<a href="#">Business Studies</a>
-<a href="#">Economics</a>
-<a href="#">Psychology</a>
-<a href="#">Sociology</a>
-<a href="#">Politics</a>
-<a href="#">Law</a>
-<a href="#">Philosophy</a>
-<a href="#">Media Studies</a>
-<a href="#">Art & Design</a>
-<a href="#">Photography</a>
-<a href="#">Music</a>
-<a href="#">Drama & Theatre</a>
-<a href="#">Modern Languages</a>
-<a href="#">Classical Languages</a>
-<a href="#">Design & Technology</a>
-<a href="#">Food Preparation & Nutrition</a>
-<a href="#">Physical Education</a>
-<a href="#">Environmental Science</a>
 </div>
 </div>
 <button class="theme-btn" id="themeToggle">Theme</button>
@@ -106,34 +81,55 @@ body.light .card{background:#e0e0e0;color:#111;border:1px solid #ccc;}
   <div class="section" id="past-papers">
     <h2>Past Papers</h2>
     <div class="card-container">
-      <a href="#" class="card">2018 Paper 1</a>
-      <a href="#" class="card">2018 Paper 2</a>
-      <a href="#" class="card">2018 Paper 3</a>
-      <a href="#" class="card">2019 Paper 1</a>
-      <a href="#" class="card">2019 Paper 2</a>
-      <a href="#" class="card">2019 Paper 3</a>
-      <a href="#" class="card">2020 Paper 1</a>
-      <a href="#" class="card">2020 Paper 2</a>
-      <a href="#" class="card">2020 Paper 3</a>
-      <a href="#" class="card">2021 Paper 1</a>
-      <a href="#" class="card">2021 Paper 2</a>
-      <a href="#" class="card">2021 Paper 3</a>
-      <a href="#" class="card">2022 Paper 1</a>
-      <a href="#" class="card">2022 Paper 2</a>
-      <a href="#" class="card">2022 Paper 3</a>
-      <a href="#" class="card">2023 Paper 1</a>
-      <a href="#" class="card">2023 Paper 2</a>
-      <a href="#" class="card">2023 Paper 3</a>
-      <a href="#" class="card">2024 Paper 1</a>
-      <a href="#" class="card">2024 Paper 2</a>
-      <a href="#" class="card">2024 Paper 3</a>
+      <a href="#" class="card">2018 Foundation Paper 1</a>
+      <a href="#" class="card">2018 Foundation Paper 2</a>
+      <a href="#" class="card">2018 Foundation Paper 3</a>
+      <a href="#" class="card">2018 Higher Paper 1</a>
+      <a href="#" class="card">2018 Higher Paper 2</a>
+      <a href="#" class="card">2018 Higher Paper 3</a>
+      <a href="#" class="card">2019 Foundation Paper 1</a>
+      <a href="#" class="card">2019 Foundation Paper 2</a>
+      <a href="#" class="card">2019 Foundation Paper 3</a>
+      <a href="#" class="card">2019 Higher Paper 1</a>
+      <a href="#" class="card">2019 Higher Paper 2</a>
+      <a href="#" class="card">2019 Higher Paper 3</a>
+      <a href="#" class="card">2020 Foundation Paper 1</a>
+      <a href="#" class="card">2020 Foundation Paper 2</a>
+      <a href="#" class="card">2020 Foundation Paper 3</a>
+      <a href="#" class="card">2020 Higher Paper 1</a>
+      <a href="#" class="card">2020 Higher Paper 2</a>
+      <a href="#" class="card">2020 Higher Paper 3</a>
+      <a href="#" class="card">2021 Foundation Paper 1</a>
+      <a href="#" class="card">2021 Foundation Paper 2</a>
+      <a href="#" class="card">2021 Foundation Paper 3</a>
+      <a href="#" class="card">2021 Higher Paper 1</a>
+      <a href="#" class="card">2021 Higher Paper 2</a>
+      <a href="#" class="card">2021 Higher Paper 3</a>
+      <a href="#" class="card">2022 Foundation Paper 1</a>
+      <a href="#" class="card">2022 Foundation Paper 2</a>
+      <a href="#" class="card">2022 Foundation Paper 3</a>
+      <a href="#" class="card">2022 Higher Paper 1</a>
+      <a href="#" class="card">2022 Higher Paper 2</a>
+      <a href="#" class="card">2022 Higher Paper 3</a>
+      <a href="#" class="card">2023 Foundation Paper 1</a>
+      <a href="#" class="card">2023 Foundation Paper 2</a>
+      <a href="#" class="card">2023 Foundation Paper 3</a>
+      <a href="#" class="card">2023 Higher Paper 1</a>
+      <a href="#" class="card">2023 Higher Paper 2</a>
+      <a href="#" class="card">2023 Higher Paper 3</a>
+      <a href="#" class="card">2024 Foundation Paper 1</a>
+      <a href="#" class="card">2024 Foundation Paper 2</a>
+      <a href="#" class="card">2024 Foundation Paper 3</a>
+      <a href="#" class="card">2024 Higher Paper 1</a>
+      <a href="#" class="card">2024 Higher Paper 2</a>
+      <a href="#" class="card">2024 Higher Paper 3</a>
     </div>
   </div>
 
   <div class="section" id="games-quizzes">
     <h2>Games & Quizzes</h2>
     <div class="card-container">
-      <a href="#" class="card">Maths Puzzle Game</a>
+      <a href="mathspuzzlegame" class="card">Maths Puzzle Game</a>
       <a href="#" class="card">Times Tables Challenge</a>
       <a href="#" class="card">Algebra Quiz</a>
       <a href="#" class="card">Geometry Quiz</a>
@@ -150,9 +146,7 @@ document.querySelectorAll(".nav-item").forEach(item=>{
   item.querySelector("a").onclick=(e)=>{
     e.preventDefault();
     const drop=item.querySelector(".dropdown");
-    document.querySelectorAll(".dropdown").forEach(d=>{
-      if(d!==drop)d.style.display="none";
-    });
+    document.querySelectorAll(".dropdown").forEach(d=>{if(d!==drop)d.style.display="none";});
     drop.style.display=(drop.style.display==="flex")?"none":"flex";
   }
 });
