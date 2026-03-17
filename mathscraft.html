@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>MathCraft 3D</title>
+  <style>
+    body { margin: 0; overflow: hidden; font-family: sans-serif; }
+    #ui {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      background: white;
+      padding: 12px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+  </style>
+</head>
+<body>
+
+<div id="ui">
+  <b>Solve to mine:</b>
+  <div id="question"></div>
+  <input id="answer" type="number" />
+  <div id="message"></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.158.0/build/three.min.js"></script>
+
+<script>
+// Scene setup
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+const renderer = new THREE.WebGLRenderer();
+renderer.setSize(window.innerWidth, window.innerHeight);
+document.body.appendChild(renderer.domElement);
+
+// Lighting
+const light = new THREE.PointLight(0xffffff, 1);
+light.position.set(10,10,10);
+scene.add(light);
+scene.add(new THREE.AmbientLight(0x404040));
+
+// Camera position
+camera.position.set(5,5,5);
+camera.lookAt(0,0,0);
+
+// Blocks
+const blocks = [];
+const geometry = new THREE.BoxGeometry(1,1,1);
+const material = new THREE.MeshStandardMaterial({ color: 0x00ff00 });
+
+function addBlock(x,y,z) {
+  const cube = new THREE.Mesh(geometry, material.clone());
+  cube.position.set(x,y,z);
+  scene.add(cube);
+  blocks.push(cube);
+}
+
+addBlock(0,0,0);
+addBlock(1,0,0);
+addBlock(-1,0,0);
+addBlock(0,0,1);
+
+// Math system
+function generateQuestion() {
+  const a = Math.floor(Math.random()*10)+1;
+  const b = Math.floor(Math.random()*10)+1;
+  return { text: `${a} + ${b}`, correct: a+b };
+}
+
+let currentQuestion = generateQuestion();
+const qEl = document.getElementById("question");
+const aEl = document.getElementById("answer");
+const mEl = document.getElementById("message");
+
+function updateUI() {
+  qEl.textContent = currentQuestion.text;
+}
+updateUI();
+
+// Raycaster for clicking
+const raycaster = new THREE.Raycaster();
+const mouse = new THREE.Vector2();
+
+window.addEventListener("click", (event) => {
+  mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+  mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+  raycaster.setFromCamera(mouse, camera);
+  const intersects = raycaster.intersectObjects(blocks);
+
+  if (intersects.length > 0) {
+    const clicked = intersects[0].object;
+
+    if (parseInt(aEl.value) === currentQuestion.correct) {
+      scene.remove(clicked);
+      blocks.splice(blocks.indexOf(clicked),1);
+      mEl.textContent = "⛏️ Block mined!";
+      currentQuestion = generateQuestion();
+      aEl.value = "";
+      updateUI();
+    } else {
+      mEl.textContent = "❌ Wrong answer!";
+    }
+  }
+});
+
+// Render loop
+function animate() {
+  requestAnimationFrame(animate);
+  renderer.render(scene, camera);
+}
+animate();
+
+// Resize fix
+window.addEventListener("resize", () => {
+  camera.aspect = window.innerWidth/window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+});
+</script>
+
+</body>
+</html>
