@@ -7,694 +7,172 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
 
 <style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Inter,sans-serif;scroll-behavior:smooth;}
+body{background:#0d0d0d;color:#eee;overflow-x:hidden;transition:background .3s,color .3s;}
+body.light{background:#f4f4f4;color:#111;}
+a{text-decoration:none;color:inherit;}
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Inter,sans-serif;
-scroll-behavior:smooth;
-}
-
-body{
-background:#0d0d0d;
-color:#eee;
-overflow-x:hidden;
-transition:background .3s,color .3s;
-}
-
-body.light{
-background:#f4f4f4;
-color:#111;
-}
-
-a{
-text-decoration:none;
-color:inherit;
-}
-
-/* header */
-
-header{
-position:fixed;
-top:0;
-width:100%;
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:15px 30px;
-background:rgba(20,20,20,0.55);
-backdrop-filter:blur(14px);
-border-bottom:1px solid rgba(255,255,255,.08);
-z-index:3000;
-}
-
-body.light header{
-background:rgba(255,255,255,.65);
-border-bottom:1px solid rgba(0,0,0,.1);
-}
-
-header h1{
-color:#ff3860;
-font-size:22px;
-}
-
-/* nav */
-
-nav{
-display:flex;
-align-items:center;
-gap:18px;
-}
-
-.nav-item{
-position:relative;
-cursor:pointer;
-}
-
-/* dropdown */
-
-.dropdown{
-position:absolute;
-top:36px;
-left:0;
-display:none;
-flex-direction:column;
-min-width:200px;
-border-radius:10px;
-background:rgba(20,20,20,0.95);
-backdrop-filter:blur(10px);
-border:1px solid rgba(255,255,255,.08);
-box-shadow:0 12px 30px rgba(0,0,0,.4);
-z-index:4000;
-}
-
-body.light .dropdown{
-background:white;
-border:1px solid rgba(0,0,0,.1);
-}
-
-.dropdown a{
-padding:10px 14px;
-}
-
-.dropdown a:hover{
-background:rgba(255,255,255,.08);
-color:#ff3860;
-}
-
-/* theme button */
-
-.theme-btn{
-background:#ff3860;
-border:none;
-color:white;
-padding:6px 12px;
-border-radius:6px;
-cursor:pointer;
-font-weight:600;
-}
-
-/* hero */
-
-.hero{
-height:100vh;
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-text-align:center;
-padding:40px;
-}
-
-.hero h2{
-font-size:48px;
-margin-bottom:15px;
-}
-
-.hero p{
-max-width:650px;
-opacity:.9;
-}
-
-.hero-buttons{
-margin-top:20px;
-}
-
-.btn{
-display:inline-block;
-padding:10px 18px;
-margin:10px;
-border-radius:6px;
-background:#ff3860;
-color:white;
-font-weight:bold;
-}
-
-/* sections */
-
-section{
-padding:100px 30px;
-max-width:1100px;
-margin:auto;
-}
-
-section h2{
-color:#ff3860;
-margin-bottom:20px;
-}
-
-/* cards */
-
-.cards{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-gap:25px;
-}
-
-.card{
-background:#111;
-padding:25px;
-border-radius:12px;
-border:1px solid #222;
-transition:transform .15s;
-}
-
-body.light .card{
-background:white;
-border:1px solid #ccc;
-}
-
-.card:hover{
-border-color:#ff3860;
-}
-
-/* footer */
-
-footer{
-text-align:center;
-padding:40px;
-opacity:.7;
-}
-
-/* mobile */
-
-.hamburger{
-display:none;
-flex-direction:column;
-cursor:pointer;
-}
-
-.hamburger span{
-height:3px;
-width:24px;
-background:#ff3860;
-margin:4px 0;
-}
-
-@media(max-width:800px){
-
-nav{
-display:none;
-position:absolute;
-top:60px;
-right:0;
-background:#111;
-flex-direction:column;
-padding:20px;
-border-radius:8px;
-}
-
-nav.active{
-display:flex;
-}
-
-body.light nav{
-background:white;
-}
-
-.hamburger{
-display:flex;
-}
-
-}
-
+header{position:fixed;top:0;width:100%;display:flex;justify-content:space-between;align-items:center;padding:15px 30px;background:rgba(20,20,20,0.55);backdrop-filter:blur(14px);border-bottom:1px solid rgba(255,255,255,.08);z-index:3000;}
+body.light header{background:rgba(255,255,255,.65);border-bottom:1px solid rgba(0,0,0,.1);}
+header h1{color:#ff3860;font-size:22px;}
+nav{display:flex;align-items:center;gap:18px;}
+.nav-item{position:relative;cursor:pointer;}
+.dropdown{position:absolute;top:36px;left:0;display:none;flex-direction:column;min-width:200px;border-radius:10px;background:rgba(20,20,20,0.95);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.08);box-shadow:0 12px 30px rgba(0,0,0,.4);z-index:4000;}
+body.light .dropdown{background:white;border:1px solid rgba(0,0,0,.1);}
+.dropdown a{padding:10px 14px;}
+.dropdown a:hover{background:rgba(255,255,255,.08);color:#ff3860;}
+.theme-btn{background:#ff3860;border:none;color:white;padding:6px 12px;border-radius:6px;cursor:pointer;font-weight:600;}
+.hero{height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:40px;}
+.hero h2{font-size:48px;margin-bottom:15px;}
+.hero p{max-width:650px;opacity:.9;}
+.hero-buttons{margin-top:20px;}
+.btn{display:inline-block;padding:10px 18px;margin:10px;border-radius:6px;background:#ff3860;color:white;font-weight:bold;transition:transform .2s;}
+.btn:hover{transform:scale(1.05);}
+section{padding:100px 30px;max-width:1100px;margin:auto;}
+section h2{color:#ff3860;margin-bottom:20px;}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:25px;}
+.card{background:#111;padding:25px;border-radius:12px;border:1px solid #222;transition:transform .2s, box-shadow .2s;cursor:pointer;}
+body.light .card{background:white;border:1px solid #ccc;}
+.card:hover{border-color:#ff3860;box-shadow:0 12px 25px rgba(255,56,96,.3);transform:translateY(-5px);}
+footer{text-align:center;padding:40px;opacity:.7;}
+.hamburger{display:none;flex-direction:column;cursor:pointer;}
+.hamburger span{height:3px;width:24px;background:#ff3860;margin:4px 0;}
+@media(max-width:800px){nav{display:none;position:absolute;top:60px;right:0;background:#111;flex-direction:column;padding:20px;border-radius:8px;}nav.active{display:flex;}body.light nav{background:white;}.hamburger{display:flex;}}
 </style>
 </head>
-
 <body>
-
 <header>
-
 <h1>Anarchy Learning</h1>
-
-<div class="hamburger" id="hamburger">
-<span></span>
-<span></span>
-<span></span>
-</div>
-
+<div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
 <nav id="navMenu">
-
-<div class="nav-item">
-<a href="#">Exams</a>
-<div class="dropdown">
-<a href="#sats">SATs Revision</a>
-<a href="#gcse">GCSE Revision</a>
-<a href="#alevel">A‑Level Revision</a>
-</div>
-</div>
-
-<div class="nav-item">
-<a href="#">Subjects</a>
-<div class="dropdown">
-<a href="#subjects">Mathematics</a>
-<a href="#subjects">Further Mathematics</a>
-<a href="#subjects">English Language</a>
-<a href="#subjects">English Literature</a>
-<a href="#subjects">Biology</a>
-<a href="#subjects">Chemistry</a>
-<a href="#subjects">Physics</a>
-<a href="#subjects">Computer Science</a>
-<a href="#subjects">Geography</a>
-<a href="#subjects">History</a>
-<a href="#subjects">Religious Studies</a>
-<a href="#subjects">Business Studies</a>
-<a href="#subjects">Economics</a>
-<a href="#subjects">Psychology</a>
-<a href="#subjects">Sociology</a>
-<a href="#subjects">Politics</a>
-<a href="#subjects">Law</a>
-<a href="#subjects">Philosophy</a>
-<a href="#subjects">Media Studies</a>
-<a href="#subjects">Art & Design</a>
-<a href="#subjects">Photography</a>
-<a href="#subjects">Music</a>
-<a href="#subjects">Drama & Theatre</a>
-<a href="#subjects">Modern Languages</a>
-<a href="#subjects">Classical Languages</a>
-<a href="#subjects">Design & Technology</a>
-<a href="#subjects">Food Preparation & Nutrition</a>
-<a href="#subjects">Physical Education</a>
-<a href="#subjects">Environmental Science</a>
-</div>
-</div>
-
-<div class="nav-item">
-<a href="#">Courses</a>
-<div class="dropdown">
-<a href="#courses">Programming</a>
-<a href="#courses">Cybersecurity</a>
-<a href="#courses">Photography</a>
-<a href="#courses">Digital Media</a>
-</div>
-</div>
-
-<div class="nav-item">
-<a href="#">Resources</a>
-<div class="dropdown">
-<a href="#resources">Revision Guides</a>
-<a href="#resources">Practice Questions</a>
-<a href="#resources">Project Labs</a>
-</div>
-</div>
-
+<div class="nav-item"><a href="#">Exams</a><div class="dropdown"><a href="#sats">SATs Revision</a><a href="#gcse">GCSE Revision</a><a href="#alevel">A-Level Revision</a></div></div>
+<div class="nav-item"><a href="#">Subjects</a><div class="dropdown"><a href="#">Mathematics</a><a href="#">Further Mathematics</a><a href="#">English Language</a><a href="#">English Literature</a><a href="#">Biology</a><a href="#">Chemistry</a><a href="#">Physics</a><a href="#">Computer Science</a><a href="#">Geography</a><a href="#">History</a><a href="#">Religious Studies</a><a href="#">Business Studies</a><a href="#">Economics</a><a href="#">Psychology</a><a href="#">Sociology</a><a href="#">Politics</a><a href="#">Law</a><a href="#">Philosophy</a><a href="#">Media Studies</a><a href="#">Art & Design</a><a href="#">Photography</a><a href="#">Music</a><a href="#">Drama & Theatre</a><a href="#">Modern Languages</a><a href="#">Classical Languages</a><a href="#">Design & Technology</a><a href="#">Food Preparation & Nutrition</a><a href="#">Physical Education</a><a href="#">Environmental Science</a></div></div>
+<div class="nav-item"><a href="#">Courses</a><div class="dropdown"><a href="#">Programming</a><a href="#">Cybersecurity</a><a href="#">Photography</a><a href="#">Digital Media</a></div></div>
+<div class="nav-item"><a href="#">Resources</a><div class="dropdown"><a href="#">Revision Guides</a><a href="#">Practice Questions</a><a href="#">Project Labs</a></div></div>
 <button class="theme-btn" id="themeToggle">Theme</button>
-
 </nav>
-
 </header>
 
 <div class="hero">
-
 <h2>Learn, Revise, and Build Skills</h2>
-
-<p>
-Anarchy Learning is an open education platform offering both original courses and structured revision for UK exams including SATs, GCSEs and A‑Levels.
-</p>
-
-<div class="hero-buttons">
-<a href="#gcse" class="btn">Start Revising</a>
-<a href="#courses" class="btn">Explore Courses</a>
-</div>
-
+<p>Anarchy Learning is an open education platform offering both original courses and structured revision for UK exams including SATs, GCSEs and A-Levels.</p>
+<div class="hero-buttons"><a href="#gcse" class="btn">Start Revising</a><a href="#courses" class="btn">Explore Courses</a></div>
 </div>
 
 <section id="sats">
-
 <h2>SATs Revision</h2>
-
 <div class="cards">
-
-<div class="card">
-<h3>Maths</h3>
-<p>Arithmetic, reasoning, fractions, percentages, geometry and problem solving.</p>
+<a href="#" class="card"><h3>Maths</h3><p>Arithmetic, reasoning, fractions, percentages, geometry and problem solving.</p></a>
+<a href="#" class="card"><h3>Reading</h3><p>Reading comprehension, inference and analysing texts.</p></a>
+<a href="#" class="card"><h3>Spelling, Punctuation & Grammar</h3><p>Sentence structure, grammar rules, spelling patterns and punctuation.</p></a>
 </div>
-
-<div class="card">
-<h3>Reading</h3>
-<p>Reading comprehension, inference and analysing texts.</p>
-</div>
-
-<div class="card">
-<h3>Spelling, Punctuation & Grammar</h3>
-<p>Sentence structure, grammar rules, spelling patterns and punctuation.</p>
-</div>
-
-</div>
-
 </section>
 
 <section id="gcse">
-
 <h2>GCSE Revision</h2>
-
 <div class="cards">
-
-<div href="gcsemaths" class="card"><h3>Mathematics</h3><p>Algebra, geometry, trigonometry, probability and statistics.</p></div>
-<div class="card"><h3>English Language</h3><p>Writing skills, comprehension and language analysis.</p></div>
-<div class="card"><h3>English Literature</h3><p>Poetry, plays, novels and literary analysis.</p></div>
-<div class="card"><h3>Biology</h3><p>Cells, genetics, ecosystems and human biology.</p></div>
-<div class="card"><h3>Chemistry</h3><p>Atomic structure, reactions and organic chemistry.</p></div>
-<div class="card"><h3>Physics</h3><p>Forces, energy, electricity, waves and space physics.</p></div>
-<div class="card"><h3>Combined Science</h3><p>Biology, Chemistry and Physics core concepts.</p></div>
-<div class="card"><h3>Computer Science</h3><p>Programming, algorithms and computer systems.</p></div>
-<div class="card"><h3>Geography</h3><p>Physical landscapes, climate change and global issues.</p></div>
-<div class="card"><h3>History</h3><p>Historical events, sources and analysis.</p></div>
-<div class="card"><h3>Religious Studies</h3><p>Beliefs, philosophy and ethics.</p></div>
-<div class="card"><h3>Business Studies</h3><p>Business operations, marketing and finance.</p></div>
-<div class="card"><h3>Economics</h3><p>Markets, supply and demand, global economics.</p></div>
-<div class="card"><h3>Psychology</h3><p>Human behaviour and cognitive processes.</p></div>
-<div class="card"><h3>Sociology</h3><p>Society, culture and social behaviour.</p></div>
-<div class="card"><h3>Media Studies</h3><p>Film, television and digital media analysis.</p></div>
-<div class="card"><h3>Art & Design</h3><p>Creative techniques and visual design.</p></div>
-<div class="card"><h3>Photography</h3><p>Camera skills, lighting and editing.</p></div>
-<div class="card"><h3>Music</h3><p>Music theory, performance and composition.</p></div>
-<div class="card"><h3>Drama</h3><p>Performance skills and theatre studies.</p></div>
-<div class="card"><h3>Modern Languages</h3><p>French, Spanish, German and other languages.</p></div>
-<div class="card"><h3>Design & Technology</h3><p>Engineering design and product development.</p></div>
-<div class="card"><h3>Food Preparation & Nutrition</h3><p>Cooking skills and nutrition science.</p></div>
-<div class="card"><h3>Physical Education</h3><p>Sports science and physical health.</p></div>
-
+<a href="gcsemaths" class="card"><h3>Mathematics</h3><p>Algebra, geometry, trigonometry, probability and statistics.</p></a>
+<a href="#" class="card"><h3>English Language</h3><p>Writing skills, comprehension and language analysis.</p></a>
+<a href="#" class="card"><h3>English Literature</h3><p>Poetry, plays, novels and literary analysis.</p></a>
+<a href="#" class="card"><h3>Biology</h3><p>Cells, genetics, ecosystems and human biology.</p></a>
+<a href="#" class="card"><h3>Chemistry</h3><p>Atomic structure, reactions and organic chemistry.</p></a>
+<a href="#" class="card"><h3>Physics</h3><p>Forces, energy, electricity, waves and space physics.</p></a>
+<a href="#" class="card"><h3>Combined Science</h3><p>Biology, Chemistry and Physics core concepts.</p></a>
+<a href="#" class="card"><h3>Computer Science</h3><p>Programming, algorithms and computer systems.</p></a>
+<a href="#" class="card"><h3>Geography</h3><p>Physical landscapes, climate change and global issues.</p></a>
+<a href="#" class="card"><h3>History</h3><p>Historical events, sources and analysis.</p></a>
+<a href="#" class="card"><h3>Religious Studies</h3><p>Beliefs, philosophy and ethics.</p></a>
+<a href="#" class="card"><h3>Business Studies</h3><p>Business operations, marketing and finance.</p></a>
+<a href="#" class="card"><h3>Economics</h3><p>Markets, supply and demand, global economics.</p></a>
+<a href="#" class="card"><h3>Psychology</h3><p>Human behaviour and cognitive processes.</p></a>
+<a href="#" class="card"><h3>Sociology</h3><p>Society, culture and social behaviour.</p></a>
+<a href="#" class="card"><h3>Media Studies</h3><p>Film, television and digital media analysis.</p></a>
+<a href="#" class="card"><h3>Art & Design</h3><p>Creative techniques and visual design.</p></a>
+<a href="#" class="card"><h3>Photography</h3><p>Camera skills, lighting and editing.</p></a>
+<a href="#" class="card"><h3>Music</h3><p>Music theory, performance and composition.</p></a>
+<a href="#" class="card"><h3>Drama</h3><p>Performance skills and theatre studies.</p></a>
+<a href="#" class="card"><h3>Modern Languages</h3><p>French, Spanish, German and other languages.</p></a>
+<a href="#" class="card"><h3>Design & Technology</h3><p>Engineering design and product development.</p></a>
+<a href="#" class="card"><h3>Food Preparation & Nutrition</h3><p>Cooking skills and nutrition science.</p></a>
+<a href="#" class="card"><h3>Physical Education</h3><p>Sports science and physical health.</p></a>
 </div>
-
 </section>
 
 <section id="alevel">
-
 <h2>A-Level Revision</h2>
-
 <div class="cards">
-
-<div class="card"><h3>Mathematics</h3><p>Pure maths, mechanics and statistics.</p></div>
-<div class="card"><h3>Further Mathematics</h3><p>Advanced algebra, complex numbers and matrices.</p></div>
-<div class="card"><h3>Physics</h3><p>Mechanics, electricity, waves and quantum physics.</p></div>
-<div class="card"><h3>Chemistry</h3><p>Organic chemistry, physical chemistry and analysis.</p></div>
-<div class="card"><h3>Biology</h3><p>Cell biology, genetics and ecosystems.</p></div>
-<div class="card"><h3>Computer Science</h3><p>Algorithms, data structures and system design.</p></div>
-<div class="card"><h3>Economics</h3><p>Microeconomics, macroeconomics and global trade.</p></div>
-<div class="card"><h3>Business</h3><p>Business strategy, finance and management.</p></div>
-<div class="card"><h3>Psychology</h3><p>Cognition, behaviour and psychological research.</p></div>
-<div class="card"><h3>Sociology</h3><p>Social institutions and cultural studies.</p></div>
-<div class="card"><h3>Politics</h3><p>Political systems, democracy and ideology.</p></div>
-<div class="card"><h3>Law</h3><p>Legal systems, criminal and civil law.</p></div>
-<div class="card"><h3>Philosophy</h3><p>Ethics, logic and metaphysics.</p></div>
-<div class="card"><h3>Geography</h3><p>Human geography, physical geography and global issues.</p></div>
-<div class="card"><h3>History</h3><p>Modern and historical political developments.</p></div>
-<div class="card"><h3>English Literature</h3><p>Advanced literary analysis and criticism.</p></div>
-<div class="card"><h3>English Language</h3><p>Linguistics, language theory and analysis.</p></div>
-<div class="card"><h3>Media Studies</h3><p>Media theory, film and digital culture.</p></div>
-<div class="card"><h3>Art & Design</h3><p>Creative development and portfolio work.</p></div>
-<div class="card"><h3>Photography</h3><p>Advanced photographic practice and editing.</p></div>
-<div class="card"><h3>Music</h3><p>Composition, theory and performance.</p></div>
-<div class="card"><h3>Drama & Theatre</h3><p>Performance and theatre production.</p></div>
-<div class="card"><h3>Environmental Science</h3><p>Ecosystems, sustainability and environmental management.</p></div>
-<div class="card"><h3>Physical Education</h3><p>Sports science and physiology.</p></div>
-
+<a href="#" class="card"><h3>Mathematics</h3><p>Pure maths, mechanics and statistics.</p></a>
+<a href="#" class="card"><h3>Further Mathematics</h3><p>Advanced algebra, complex numbers and matrices.</p></a>
+<a href="#" class="card"><h3>Physics</h3><p>Mechanics, electricity, waves and quantum physics.</p></a>
+<a href="#" class="card"><h3>Chemistry</h3><p>Organic chemistry, physical chemistry and analysis.</p></a>
+<a href="#" class="card"><h3>Biology</h3><p>Cell biology, genetics and ecosystems.</p></a>
+<a href="#" class="card"><h3>Computer Science</h3><p>Algorithms, data structures and system design.</p></a>
+<a href="#" class="card"><h3>Economics</h3><p>Microeconomics, macroeconomics and global trade.</p></a>
+<a href="#" class="card"><h3>Business</h3><p>Business strategy, finance and management.</p></a>
+<a href="#" class="card"><h3>Psychology</h3><p>Cognition, behaviour and psychological research.</p></a>
+<a href="#" class="card"><h3>Sociology</h3><p>Social institutions and cultural studies.</p></a>
+<a href="#" class="card"><h3>Politics</h3><p>Political systems, democracy and ideology.</p></a>
+<a href="#" class="card"><h3>Law</h3><p>Legal systems, criminal and civil law.</p></a>
+<a href="#" class="card"><h3>Philosophy</h3><p>Ethics, logic and metaphysics.</p></a>
+<a href="#" class="card"><h3>Geography</h3><p>Human geography, physical geography and global issues.</p></a>
+<a href="#" class="card"><h3>History</h3><p>Modern and historical political developments.</p></a>
+<a href="#" class="card"><h3>English Literature</h3><p>Advanced literary analysis and criticism.</p></a>
+<a href="#" class="card"><h3>English Language</h3><p>Linguistics, language theory and analysis.</p></a>
+<a href="#" class="card"><h3>Media Studies</h3><p>Media theory, film and digital culture.</p></a>
+<a href="#" class="card"><h3>Art & Design</h3><p>Creative development and portfolio work.</p></a>
+<a href="#" class="card"><h3>Photography</h3><p>Advanced photographic practice and editing.</p></a>
+<a href="#" class="card"><h3>Music</h3><p>Composition, theory and performance.</p></a>
+<a href="#" class="card"><h3>Drama & Theatre</h3><p>Performance and theatre production.</p></a>
+<a href="#" class="card"><h3>Environmental Science</h3><p>Ecosystems, sustainability and environmental management.</p></a>
+<a href="#" class="card"><h3>Physical Education</h3><p>Sports science and physiology.</p></a>
 </div>
-
-</section>
 
 <section id="subjects">
-
 <h2>Subjects</h2>
-
 <div class="cards">
-
-<div class="card">
-<h3>Mathematics</h3>
-<p>Arithmetic, Algebra, Geometry, Trigonometry, Calculus and Statistics.</p>
-</div>
-
-<div class="card">
-<h3>English Language</h3>
-<p>Writing skills, comprehension, grammar and communication.</p>
-</div>
-
-<div class="card">
-<h3>English Literature</h3>
-<p>Poetry, novels, plays and literary analysis.</p>
-</div>
-
-<div class="card">
-<h3>Biology</h3>
-<p>Cells, genetics, ecosystems and human biology.</p>
-</div>
-
-<div class="card">
-<h3>Chemistry</h3>
-<p>Atomic structure, reactions, organic chemistry and analysis.</p>
-</div>
-
-<div class="card">
-<h3>Physics</h3>
-<p>Energy, forces, electricity, waves and modern physics.</p>
-</div>
-
-<div class="card">
-<h3>Computer Science</h3>
-<p>Programming, algorithms, data structures and computing theory.</p>
-</div>
-
-<div class="card">
-<h3>Geography</h3>
-<p>Physical landscapes, climate, population and global issues.</p>
-</div>
-
-<div class="card">
-<h3>History</h3>
-<p>World history, political change and historical analysis.</p>
-</div>
-
-<div class="card">
-<h3>Religious Studies</h3>
-<p>Beliefs, ethics, philosophy and world religions.</p>
-</div>
-
-<div class="card">
-<h3>Business Studies</h3>
-<p>Business operations, marketing, finance and entrepreneurship.</p>
-</div>
-
-<div class="card">
-<h3>Economics</h3>
-<p>Markets, economic theory, global trade and finance.</p>
-</div>
-
-<div class="card">
-<h3>Psychology</h3>
-<p>Human behaviour, cognition and psychological research.</p>
-</div>
-
-<div class="card">
-<h3>Sociology</h3>
-<p>Society, culture, social behaviour and institutions.</p>
-</div>
-
-<div class="card">
-<h3>Politics</h3>
-<p>Government systems, democracy and political theory.</p>
-</div>
-
-<div class="card">
-<h3>Law</h3>
-<p>Legal systems, criminal law, civil law and justice.</p>
-</div>
-
-<div class="card">
-<h3>Philosophy</h3>
-<p>Ethics, logic, metaphysics and philosophical thinking.</p>
-</div>
-
-<div class="card">
-<h3>Media Studies</h3>
-<p>Film, television, journalism and digital media analysis.</p>
-</div>
-
-<div class="card">
-<h3>Art & Design</h3>
-<p>Creative practice, design principles and visual arts.</p>
-</div>
-
-<div class="card">
-<h3>Photography</h3>
-<p>Camera techniques, composition and editing.</p>
-</div>
-
-<div class="card">
-<h3>Music</h3>
-<p>Music theory, composition and performance.</p>
-</div>
-
-<div class="card">
-<h3>Drama & Theatre</h3>
-<p>Performance, acting techniques and theatre studies.</p>
-</div>
-
-<div class="card">
-<h3>Modern Languages</h3>
-<p>French, Spanish, German and other modern languages.</p>
-</div>
-
-<div class="card">
-<h3>Classical Languages</h3>
-<p>Latin, Classical Greek and ancient texts.</p>
-</div>
-
-<div class="card">
-<h3>Design & Technology</h3>
-<p>Engineering design, materials and product development.</p>
-</div>
-
-<div class="card">
-<h3>Food Preparation & Nutrition</h3>
-<p>Cooking skills, nutrition and food science.</p>
-</div>
-
-<div class="card">
-<h3>Physical Education</h3>
-<p>Sports science, training and physical health.</p>
-</div>
-
-<div class="card">
-<h3>Environmental Science</h3>
-<p>Ecosystems, sustainability and environmental protection.</p>
-</div>
-
-<div class="card">
-<h3>Further Mathematics</h3>
-<p>Advanced mathematical theory and complex problem solving.</p>
-</div>
-
-</div>
-
-</section>
-
-<section id="courses">
-
-<h2>Anarchy Courses</h2>
-
-<div class="cards">
-
-<div class="card">
-<h3>Programming</h3>
-<p>Learn HTML, CSS, JavaScript and software fundamentals.</p>
-</div>
-
-<div class="card">
-<h3>Cybersecurity</h3>
-<p>Understand networks, online safety and security basics.</p>
-</div>
-
-<div class="card">
-<h3>Photography</h3>
-<p>Camera techniques, lighting and editing.</p>
-</div>
-
-<div class="card">
-<h3>Digital Media</h3>
-<p>Video production, editing and online platforms.</p>
-</div>
-
-</div>
-
-</section>
-
-<section id="resources">
-
-<h2>Learning Resources</h2>
-
-<div class="cards">
-
-<div class="card">
-<h3>Revision Guides</h3>
-<p>Topic summaries and quick exam preparation notes.</p>
-</div>
-
-<div class="card">
-<h3>Practice Questions</h3>
-<p>Test your knowledge with exam-style questions.</p>
-</div>
-
-<div class="card">
-<h3>Project Labs</h3>
-<p>Hands-on experiments and creative builds.</p>
-</div>
-
-</div>
-
-</section>
-
-<footer>
-© 2026 Anarchy Learning
-</footer>
-
+<a href="#" class="card"><h3>Mathematics</h3><p>Arithmetic, Algebra, Geometry, Trigonometry, Calculus and Statistics.</p></a>
+<a href="#" class="card"><h3>English Language</h3><p>Writing skills, comprehension, grammar and communication.</p></a>
+<a href="#" class="card"><h3>English Literature</h3><p>Poetry, novels, plays and literary analysis.</p></a>
+<a href="#" class="card"><h3>Biology</h3><p>Cells, genetics, ecosystems and human biology.</p></a>
+<a href="#" class="card"><h3>Chemistry</h3><p>Atomic structure, reactions, organic chemistry and analysis.</p></a>
+<a href="#" class="card"><h3>Physics</h3><p>Energy, forces, electricity, waves and modern physics.</p></a>
+<a href="#" class="card"><h3>Computer Science</h3><p>Programming, algorithms, data structures and computing theory.</p></a>
+<a href="#" class="card"><h3>Geography</h3><p>Physical landscapes, climate, population and global issues.</p></a>
+<a href="#" class="card"><h3>History</h3><p>World history, political change and historical analysis.</p></a>
+<a href="#" class="card"><h3>Religious Studies</h3><p>Beliefs, ethics, philosophy and world religions.</p></a>
+<a href="#" class="card"><h3>Business Studies</h3><p>Business operations, marketing, finance and entrepreneurship.</p></a>
+<a href="#" class="card"><h3>Economics</h3><p>Markets, economic theory, global trade and finance.</p></a>
+<a href="#" class="card"><h3>Psychology</h3><p>Human behaviour, cognition and psychological research.</p></a>
+<a href="#" class="card"><h3>Sociology</h3><p>Society, culture, social behaviour and institutions.</p></a>
+<a href="#" class="card"><h3>Politics</h3><p>Government systems, democracy and political theory.</p></a>
+<a href="#" class="card"><h3>Law</h3><p>Legal systems, criminal law, civil law and justice.</p></a>
+<a href="#" class="card"><h3>Philosophy</h3><p>Ethics, logic, metaphysics and philosophical thinking.</p></a>
+<a href="#" class="card"><h3>Media Studies</h3><p>Film, television, journalism and digital media analysis.</p></a>
+<a href="#" class="card"><h3>Art & Design</h3><p>Creative practice, design principles and visual arts.</p></a>
+<a href="#" class="card"><h3>Photography</h3><p>Camera techniques, composition and editing.</p></a>
+<a href="#" class="card"><h3>Music</h3><p>Music theory, composition and performance.</p></a>
+<a href="#" class="card"><h3>Drama & Theatre</h3><p>Performance, acting techniques and theatre studies.</p></a>
+</div></section>
+<section id="courses"><h2>Anarchy Courses</h2><div class="cards">
+<a href="#" class="card"><h3>Programming</h3><p>Learn HTML, CSS, JavaScript and software fundamentals.</p></a>
+<a href="#" class="card"><h3>Cybersecurity</h3><p>Understand networks, online safety and security basics.</p></a>
+<a href="#" class="card"><h3>Photography</h3><p>Camera techniques, lighting and editing.</p></a>
+<a href="#" class="card"><h3>Digital Media</h3><p>Video production, editing and online platforms.</p></a>
+</div></section>
+<section id="resources"><h2>Learning Resources</h2><div class="cards">
+<a href="#" class="card"><h3>Revision Guides</h3><p>Topic summaries and quick exam preparation notes.</p></a>
+<a href="#" class="card"><h3>Practice Questions</h3><p>Test your knowledge with exam-style questions.</p></a>
+<a href="#" class="card"><h3>Project Labs</h3><p>Hands-on experiments and creative builds.</p></a>
+</div></section>
+<footer>© 2026 Anarchy Learning</footer>
 <script>
-
-const burger=document.getElementById("hamburger")
-const nav=document.getElementById("navMenu")
-
-burger.onclick=()=>nav.classList.toggle("active")
-
-/* dropdown menus */
-
-document.querySelectorAll(".nav-item").forEach(item=>{
-item.querySelector("a").onclick=(e)=>{
-e.preventDefault()
-
-const drop=item.querySelector(".dropdown")
-
-document.querySelectorAll(".dropdown").forEach(d=>{
-if(d!==drop)d.style.display="none"
-})
-
-if(drop.style.display==="flex"){
-drop.style.display="none"
-}else{
-drop.style.display="flex"
-}
-}
-})
-
-/* theme toggle */
-
-const toggle=document.getElementById("themeToggle")
-
-if(localStorage.getItem("theme")==="light"){
-document.body.classList.add("light")
-}
-
-toggle.onclick=()=>{
-document.body.classList.toggle("light")
-
-if(document.body.classList.contains("light")){
-localStorage.setItem("theme","light")
-}else{
-localStorage.setItem("theme","dark")
-}
-}
-
+const burger=document.getElementById("hamburger");
+const nav=document.getElementById("navMenu");
+burger.onclick=()=>nav.classList.toggle("active");
+document.querySelectorAll(".nav-item").forEach(item=>{item.querySelector("a").onclick=(e)=>{e.preventDefault();const drop=item.querySelector(".dropdown");document.querySelectorAll(".dropdown").forEach(d=>{if(d!==drop)d.style.display="none";});drop.style.display=(drop.style.display==="flex")?"none":"flex";}});
+const toggle=document.getElementById("themeToggle");
+if(localStorage.getItem("theme")==="light"){document.body.classList.add("light");}
+toggle.onclick=()=>{document.body.classList.toggle("light");if(document.body.classList.contains("light")){localStorage.setItem("theme","light");}else{localStorage.setItem("theme","dark");}}
 </script>
-
 </body>
 </html>
