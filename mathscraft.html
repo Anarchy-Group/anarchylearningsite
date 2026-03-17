@@ -5,7 +5,7 @@
   <title>MathCraft 3D</title>
   <style>
     body { margin: 0; overflow: hidden; font-family: sans-serif; }
-    #ui {
+    #ui, #quiz {
       position: absolute;
       top: 16px;
       left: 16px;
@@ -14,21 +14,24 @@
       border-radius: 12px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.2);
     }
+    #quiz { display: none; top: 50%; left: 50%; transform: translate(-50%, -50%); }
   </style>
 </head>
 <body>
 
-<div id="ui">
-  <b>Solve to mine:</b>
+<div id="ui">Click to lock mouse. WASD to move.</div>
+
+<div id="quiz">
+  <b>Answer to continue:</b>
   <div id="question"></div>
   <input id="answer" type="number" />
+  <button onclick="submitAnswer()">Submit</button>
   <div id="message"></div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/three@0.158.0/build/three.min.js"></script>
 
 <script>
-// Scene setup
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
 const renderer = new THREE.WebGLRenderer();
@@ -36,84 +39,135 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
 // Lighting
+scene.add(new THREE.AmbientLight(0x404040));
 const light = new THREE.PointLight(0xffffff, 1);
 light.position.set(10,10,10);
 scene.add(light);
-scene.add(new THREE.AmbientLight(0x404040));
 
-// Camera position
-camera.position.set(5,5,5);
-camera.lookAt(0,0,0);
+// Player
+camera.position.set(0,1.6,5);
+
+// Movement
+const keys = {};
+document.addEventListener("keydown", e => keys[e.key.toLowerCase()] = true);
+document.addEventListener("keyup", e => keys[e.key.toLowerCase()] = false);
+
+// Mouse look
+let yaw = 0, pitch = 0;
+document.body.addEventListener("click", () => {
+  document.body.requestPointerLock();
+});
+
+document.addEventListener("mousemove", (e) => {
+  if (document.pointerLockElement === document.body) {
+    yaw -= e.movementX * 0.002;
+    pitch -= e.movementY * 0.002;
+    pitch = Math.max(-Math.PI/2, Math.min(Math.PI/2, pitch));
+    camera.rotation.set(pitch, yaw, 0);
+  }
+});
 
 // Blocks
 const blocks = [];
 const geometry = new THREE.BoxGeometry(1,1,1);
-const material = new THREE.MeshStandardMaterial({ color: 0x00ff00 });
 
 function addBlock(x,y,z) {
-  const cube = new THREE.Mesh(geometry, material.clone());
+  const mat = new THREE.MeshStandardMaterial({ color: 0x00ff00 });
+  const cube = new THREE.Mesh(geometry, mat);
   cube.position.set(x,y,z);
   scene.add(cube);
   blocks.push(cube);
 }
 
-addBlock(0,0,0);
-addBlock(1,0,0);
-addBlock(-1,0,0);
-addBlock(0,0,1);
+for (let x=-2; x<=2; x++) {
+  for (let z=-2; z<=2; z++) {
+    addBlock(x,0,z);
+  }
+}
 
-// Math system
+// Raycaster
+const raycaster = new THREE.Raycaster();
+
+let minedCount = 0;
+let locked = false;
+
+window.addEventListener("click", () => {
+  if (locked) return;
+
+  raycaster.setFromCamera(new THREE.Vector2(0,0), camera);
+  const hits = raycaster.intersectObjects(blocks);
+
+  if (hits.length > 0) {
+    const obj = hits[0].object;
+    scene.remove(obj);
+    blocks.splice(blocks.indexOf(obj),1);
+    minedCount++;
+
+    if (minedCount >= 5) {
+      locked = true;
+      showQuiz();
+    }
+  }
+});
+
+// Quiz
 function generateQuestion() {
   const a = Math.floor(Math.random()*10)+1;
   const b = Math.floor(Math.random()*10)+1;
   return { text: `${a} + ${b}`, correct: a+b };
 }
 
-let currentQuestion = generateQuestion();
-const qEl = document.getElementById("question");
-const aEl = document.getElementById("answer");
-const mEl = document.getElementById("message");
+let currentQ;
 
-function updateUI() {
-  qEl.textContent = currentQuestion.text;
+function showQuiz() {
+  document.exitPointerLock();
+  document.getElementById("quiz").style.display = "block";
+  currentQ = generateQuestion();
+  document.getElementById("question").textContent = currentQ.text;
 }
-updateUI();
 
-// Raycaster for clicking
-const raycaster = new THREE.Raycaster();
-const mouse = new THREE.Vector2();
+function submitAnswer() {
+  const val = parseInt(document.getElementById("answer").value);
+  const msg = document.getElementById("message");
 
-window.addEventListener("click", (event) => {
-  mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-  mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
-
-  raycaster.setFromCamera(mouse, camera);
-  const intersects = raycaster.intersectObjects(blocks);
-
-  if (intersects.length > 0) {
-    const clicked = intersects[0].object;
-
-    if (parseInt(aEl.value) === currentQuestion.correct) {
-      scene.remove(clicked);
-      blocks.splice(blocks.indexOf(clicked),1);
-      mEl.textContent = "⛏️ Block mined!";
-      currentQuestion = generateQuestion();
-      aEl.value = "";
-      updateUI();
-    } else {
-      mEl.textContent = "❌ Wrong answer!";
-    }
+  if (val === currentQ.correct) {
+    msg.textContent = "✅ Correct!";
+    document.getElementById("quiz").style.display = "none";
+    minedCount = 0;
+    locked = false;
+  } else {
+    msg.textContent = "❌ Try again";
   }
-});
+}
+
+// Movement loop
+function updateMovement() {
+  const speed = 0.1;
+  const dir = new THREE.Vector3();
+
+  if (keys['w']) dir.z -= 1;
+  if (keys['s']) dir.z += 1;
+  if (keys['a']) dir.x -= 1;
+  if (keys['d']) dir.x += 1;
+
+  dir.normalize();
+
+  const forward = new THREE.Vector3(0,0,-1).applyEuler(camera.rotation);
+  const right = new THREE.Vector3(1,0,0).applyEuler(camera.rotation);
+
+  camera.position.add(forward.multiplyScalar(dir.z * speed));
+  camera.position.add(right.multiplyScalar(dir.x * speed));
+}
 
 // Render loop
 function animate() {
   requestAnimationFrame(animate);
+  updateMovement();
   renderer.render(scene, camera);
 }
 animate();
 
-// Resize fix
+// Resize
 window.addEventListener("resize", () => {
   camera.aspect = window.innerWidth/window.innerHeight;
   camera.updateProjectionMatrix();
