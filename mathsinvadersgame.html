@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maths Invaders ULTRA</title>
+<style>
+body{margin:0;background:#000;color:#fff;font-family:Arial;overflow:hidden}
+#game{position:relative;width:100vw;height:100vh}
+.player{position:absolute;bottom:20px;width:60px;height:20px;background:lime;border-radius:8px}
+.invader{position:absolute;width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:bold;animation:float 1s infinite alternate}
+.bad{background:crimson}
+.good{background:deepskyblue}
+.boss{background:purple;width:80px;height:80px}
+@keyframes float{from{transform:translateY(0)}to{transform:translateY(6px)}}
+.bullet{position:absolute;width:4px;height:12px;background:yellow}
+#ui{position:absolute;bottom:100px;width:100%;text-align:center}
+#top{position:absolute;top:10px;left:10px;display:flex;gap:15px}
+#menu{position:absolute;inset:0;background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center}
+button{padding:10px 14px;font-size:16px;cursor:pointer}
+</style>
+</head>
+<body>
+
+<div id="menu">
+<h1>Maths Invaders ULTRA 🚀</h1>
+<p>Keybinds: Arrow Keys = Move | Space = Shoot | Enter = Claim Ammo</p>
+<button id="startButton">Start Game</button>
+</div>
+
+<div id="game" style="display:none">
+<div id="top">
+<div id="score">Score:0</div>
+<div id="lives">Lives:3</div>
+<div id="level">Level:1</div>
+<div id="ammo">Ammo:3</div>
+</div>
+<div id="player" class="player" style="left:50%"></div>
+<div id="ui">
+<div id="question"></div>
+<input id="answer" type="number" />
+</div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+
+let playerX=50,invaders=[],bullets=[];
+let score=0,lives=3,level=1,ammo=3,streak=0;
+let speed=0.25,spawnRate=2200,question={};
+let game=document.getElementById('game');
+let player=document.getElementById('player');
+let gameOver=false;
+
+const scoreEl=document.getElementById('score');
+const livesEl=document.getElementById('lives');
+const levelEl=document.getElementById('level');
+const ammoEl=document.getElementById('ammo');
+const startButton=document.getElementById('startButton');
+
+startButton.addEventListener('click', startGame);
+
+function startGame(){
+  document.getElementById('menu').style.display='none';
+  game.style.display='block';
+  resetGame();
+  generateQuestion();
+  spawnLoop();
+}
+
+function resetGame(){
+  invaders.forEach(i=>i.el.remove());
+  bullets.forEach(b=>b.el.remove());
+  invaders=[];bullets=[];
+  score=0;lives=3;level=1;ammo=3;streak=0;
+  speed=0.25;spawnRate=2200;gameOver=false;
+  updateUI();
+}
+
+function updateUI(){
+  scoreEl.innerText='Score:'+score;
+  livesEl.innerText='Lives:'+lives;
+  levelEl.innerText='Level:'+level;
+  ammoEl.innerText='Ammo:'+ammo;
+}
+
+function rand(a,b){return Math.floor(Math.random()*(b-a+1))+a}
+
+function generateQuestion(){
+let r=Math.random(),q,a;
+if(level<3){let x=rand(1,12),y=rand(1,12);q=`${x}×${y}`;a=x*y}
+else if(level<6){let x=rand(2,12),y=rand(2,12);q=`${x}²+${y}`;a=x*x+y}
+else{let a1=rand(2,9),b1=rand(2,9),c1=rand(2,9);q=`${a1}×(${b1}+${c1})`;a=a1*(b1+c1)}
+question={q,a};
+document.getElementById('question').innerText='Solve: '+q;
+}
+
+function spawnInvader(){
+if(gameOver)return;
+let type=Math.random();
+let div=document.createElement('div');
+let isGood=false;
+if(type<0.15){div.className='invader good';isGood=true;div.innerText='❤'}
+else if(type<0.2 && level>3){div.className='invader boss';div.innerText='BOSS'}
+else{div.className='invader bad';div.innerText='?'}
+let x=Math.random()*90;
+div.style.left=x+'%';div.style.top='0%';
+game.appendChild(div);
+invaders.push({el:div,x,y:0,good:isGood,hp:div.className.includes('boss')?3:1});
+}
+
+function claimAmmo(){
+let input=document.getElementById('answer');
+if(parseInt(input.value)===question.a){ammo+=2;input.value='';generateQuestion();}
+}
+
+function shoot(){
+if(ammo<=0||gameOver)return;
+ammo--;
+let b=document.createElement('div');
+b.className='bullet';
+b.style.left=playerX+'%';
+b.style.top='85%';
+game.appendChild(b);
+bullets.push({el:b,x:playerX,y:85});
+}
+
+function update(){
+if(gameOver)return;
+
+invaders.forEach(inv=>{
+inv.y+=speed;
+inv.el.style.top=inv.y+'%';
+
+let playerLeft=playerX/100*window.innerWidth;
+let playerRight=playerLeft+60;
+let invLeft=inv.x/100*window.innerWidth;
+let invRight=invLeft+(inv.el.offsetWidth||44);
+let invTop=inv.y/100*window.innerHeight;
+
+// FIXED collision detection (only when actually touching player)
+let playerTop = window.innerHeight - 40;
+let playerBottom = window.innerHeight;
+
+if(
+  invTop < playerBottom &&
+  invTop + (inv.el.offsetHeight||44) > playerTop &&
+  !(playerRight < invLeft || playerLeft > invRight)
+){
+  if(inv.good){lives++;}else{lives--;}
+  inv.el.remove();
+  inv.dead = true;
+}
+});
+
+bullets.forEach(b=>{b.y-=speed*2;b.el.style.top=b.y+'%';});
+
+bullets.forEach(b=>{
+invaders.forEach(inv=>{
+if(Math.abs(b.x-inv.x)<3 && Math.abs(b.y-inv.y)<3){
+b.el.remove();b.dead=true;
+inv.hp--;
+if(inv.hp<=0){
+inv.el.remove();inv.dead=true;
+if(inv.good){lives++;}else{score++;ammo++;}
+if(score%10===0){level++;speed+=0.05;}
+}
+}
+});
+});
+
+invaders=invaders.filter(i=>!i.dead);
+bullets=bullets.filter(b=>!b.dead);
+
+if(lives<=0){gameOver=true;alert('Game Over! Score:'+score);location.reload();}
+
+updateUI();
+}
+
+setInterval(update,30);
+
+function spawnLoop(){
+if(gameOver)return;
+spawnInvader();
+setTimeout(spawnLoop,spawnRate);
+spawnRate=Math.max(500,spawnRate-5);
+}
+
+window.addEventListener('keydown',e=>{
+if(e.key==='ArrowLeft')playerX=Math.max(0,playerX-5);
+if(e.key==='ArrowRight')playerX=Math.min(90,playerX+5);
+if(e.key===' ')shoot();
+if(e.key==='Enter')claimAmmo();
+player.style.left=playerX+'%';
+});
+
+});
+</script>
+
+</body>
+</html>
