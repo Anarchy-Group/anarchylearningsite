@@ -1,1 +1,103 @@
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Religious Studies GCSE Revision</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Inter,sans-serif;scroll-behavior:smooth;}
+body{background:#000;color:#eee;overflow-x:hidden;transition:background .3s,color .3s;}
+body.light{background:#f4f4f4;color:#111;}
+a{text-decoration:none;color:inherit;}
+header{position:fixed;top:0;width:100%;display:flex;justify-content:space-between;align-items:center;padding:15px 30px;background:rgba(20,20,20,0.55);backdrop-filter:blur(14px);border-bottom:1px solid rgba(255,255,255,.08);z-index:3000;}
+body.light header{background:rgba(255,255,255,.65);border-bottom:1px solid rgba(0,0,0,.1);}
+header h1{color:#ff3860;font-size:22px;}
+nav{display:flex;align-items:center;gap:18px;}
+.nav-item{position:relative;cursor:pointer;}
+.dropdown{position:absolute;top:36px;left:0;display:none;flex-direction:column;min-width:180px;border-radius:10px;background:rgba(20,20,20,0.95);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.08);box-shadow:0 12px 30px rgba(0,0,0,.4);z-index:4000;}
+body.light .dropdown{background:rgba(20,20,20,0.95);border:1px solid rgba(255,255,255,.08);}
+.dropdown a{padding:10px 14px;}
+.dropdown a:hover{background:rgba(255,255,255,.08);color:#ff3860;}
+.theme-btn{background:#ff3860;border:none;color:white;padding:6px 12px;border-radius:6px;cursor:pointer;font-weight:600;}
+.container{max-width:900px;margin:120px auto 60px auto;padding:40px;}
+.board-btn{display:inline-block;padding:12px 24px;background:#ff3860;color:white;border-radius:8px;font-weight:bold;margin:10px;cursor:pointer;}
+#boardInfo{margin-top:30px;font-size:18px;}
+</style>
+</head>
+<body>
+<header>
+<h1>Anarchy Learning</h1>
+<div class="hamburger" id="hamburger">
+<span></span>
+<span></span>
+<span></span>
+</div>
+<nav id="navMenu">
+<div class="nav-item">
+<a href="#">Exams</a>
+<div class="dropdown">
+<a href="#sats">SATs Revision</a>
+<a href="#gcse">GCSE Revision</a>
+<a href="#alevel">A-Level Revision</a>
+</div>
+</div>
+<div class="nav-item">
+<a href="#">Subjects</a>
+<div class="dropdown">
+<a href="#subjects">Mathematics</a>
+<a href="#subjects">Further Mathematics</a>
+<a href="#subjects">English Language</a>
+<a href="#subjects">English Literature</a>
+<a href="#subjects">Biology</a>
+<a href="#subjects">Chemistry</a>
+<a href="#subjects">Physics</a>
+<a href="#subjects">Computer Science</a>
+<a href="#subjects">Geography</a>
+<a href="#subjects">History</a>
+<a href="#subjects">Religious Studies</a>
+<a href="#subjects">Business Studies</a>
+<a href="#subjects">Economics</a>
+<a href="#subjects">Psychology</a>
+<a href="#subjects">Sociology</a>
+<a href="#subjects">Politics</a>
+<a href="#subjects">Law</a>
+<a href="#subjects">Philosophy</a>
+<a href="#subjects">Media Studies</a>
+<a href="#subjects">Art & Design</a>
+<a href="#subjects">Photography</a>
+<a href="#subjects">Music</a>
+<a href="#subjects">Drama & Theatre</a>
+<a href="#subjects">Modern Languages</a>
+<a href="#subjects">Classical Languages</a>
+<a href="#subjects">Design & Technology</a>
+<a href="#subjects">Food Preparation & Nutrition</a>
+<a href="#subjects">Physical Education</a>
+<a href="#subjects">Environmental Science</a>
+</div>
+</div>
+<button class="theme-btn" id="themeToggle">Theme</button>
+</nav>
+</header>
+<div class="container">
+<h2>Select Your Exam Board</h2>
+<div id="examBoardForm">
+<a href="aqamaths" class="board-btn">AQA</a>
+<a href="#" class="board-btn">Edexcel</a>
+<a href="#" class="board-btn">OCR</a>
+<a href="#" class="board-btn">WJEC</a>
+<a href="#" class="board-btn">Eduqas</a>
+</div>
+<div id="boardInfo"></div>
+</div>
+<script>
+const burger=document.getElementById("hamburger");
+const nav=document.getElementById("navMenu");
+burger.onclick=()=>nav.classList.toggle("active");
+document.querySelectorAll(".nav-item").forEach(item=>{item.querySelector("a").onclick=(e)=>{e.preventDefault();const drop=item.querySelector(".dropdown");document.querySelectorAll(".dropdown").forEach(d=>{if(d!==drop)d.style.display="none";});drop.style.display=(drop.style.display==="flex")?"none":"flex";}});
+const toggle=document.getElementById("themeToggle");
+if(localStorage.getItem("theme")==="light"){document.body.classList.add("light");}
+toggle.onclick=()=>{document.body.classList.toggle("light");if(document.body.classList.contains("light")){localStorage.setItem("theme","light");}else{localStorage.setItem("theme","dark");}}
+</script>
+</body>
+</html>
